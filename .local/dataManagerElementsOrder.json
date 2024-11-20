@@ -1,0 +1,82 @@
+{
+  "Workflows": [
+    {
+      "Path": null,
+      "SortBy": 0,
+      "VariablesSectionElementsOrder": [],
+      "ArgumentsSectionElementsOrder": null,
+      "ConstantsSectionElementsOrder": [],
+      "AddedNamespaces": null
+    },
+    {
+      "Path": "Main.xaml",
+      "SortBy": 0,
+      "VariablesSectionElementsOrder": [
+        "urlECI&Sequence_1",
+        "barcode&Sequence_1",
+        "price&Sequence_1"
+      ],
+      "ArgumentsSectionElementsOrder": [],
+      "ConstantsSectionElementsOrder": [],
+      "AddedNamespaces": null
+    },
+    {
+      "Path": "Scraping Price/Scraping Dia/scrapingDia.xaml",
+      "SortBy": 0,
+      "VariablesSectionElementsOrder": [
+        "objectPrice&Sequence_2"
+      ],
+      "ArgumentsSectionElementsOrder": [
+        "in_urlDia",
+        "out_priceDia",
+        "in_barcode"
+      ],
+      "ConstantsSectionElementsOrder": [],
+      "AddedNamespaces": null
+    },
+    {
+      "Path": "Scraping Price/Data ScrapingECI.xaml",
+      "SortBy": 0,
+      "VariablesSectionElementsOrder": [
+        "priceECI&Sequence_4",
+        "priceDia&Sequence_1",
+        "urlDia&Sequence_1",
+        "barcode&Sequence_1",
+        "excelPath&Sequence_1",
+        "UrlECI&Sequence_1",
+        "UrlCarrefour&Sequence_1"
+      ],
+      "ArgumentsSectionElementsOrder": [],
+      "ConstantsSectionElementsOrder": [],
+      "AddedNamespaces": null
+    },
+    {
+      "Path": "Scraping Price/Scraping ECI/ECI.xaml",
+      "SortBy": 0,
+      "VariablesSectionElementsOrder": [
+        "objectPrice&Sequence_2"
+      ],
+      "ArgumentsSectionElementsOrder": [
+        "out_priceECI",
+        "in_barcode",
+        "in_urlECI"
+      ],
+      "ConstantsSectionElementsOrder": [],
+      "AddedNamespaces": null
+    },
+    {
+      "Path": "DB/creating db.xaml",
+      "SortBy": 0,
+      "VariablesSectionElementsOrder": [],
+      "ArgumentsSectionElementsOrder": [
+        "in_pwd",
+        "in_db",
+        "in_usr",
+        "in_datasource",
+        "io_strDBConnection"
+      ],
+      "ConstantsSectionElementsOrder": [],
+      "AddedNamespaces": null
+    }
+  ]
+}
