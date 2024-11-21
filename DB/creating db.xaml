@@ -1,10 +1,5 @@
 <Activity mc:Ignorable="sap sap2010" x:Class="creating_db" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
-    <x:Property Name="io_strDBConnection" Type="InOutArgument(x:String)" />
-    <x:Property Name="in_datasource" Type="InArgument(x:String)" />
-    <x:Property Name="in_usr" Type="InArgument(x:String)" />
-    <x:Property Name="in_db" Type="InArgument(x:String)" />
-    <x:Property Name="in_pwd" Type="InArgument(x:String)" />
     <x:Property Name="out_dbConnection" Type="OutArgument(ui:DatabaseConnection)" />
   </x:Members>
   <VisualBasic.Settings>
@@ -44,6 +39,8 @@
       <x:String>System.ComponentModel</x:String>
       <x:String>System.Runtime.Serialization</x:String>
       <x:String>System.Xml.Serialization</x:String>
+      <x:String>System.Linq.Expressions</x:String>
+      <x:String>UiPath.Shared.Activities</x:String>
     </sco:Collection>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
@@ -87,23 +84,158 @@
       <AssemblyReference>System.Runtime.Serialization.Formatters</AssemblyReference>
       <AssemblyReference>System.Runtime.Serialization.Primitives</AssemblyReference>
       <AssemblyReference>System.Private.Xml</AssemblyReference>
+      <AssemblyReference>System.Memory.Data</AssemblyReference>
+      <AssemblyReference>UiPath.Excel.Activities.Design</AssemblyReference>
+      <AssemblyReference>System.Console</AssemblyReference>
+      <AssemblyReference>System.Configuration.ConfigurationManager</AssemblyReference>
+      <AssemblyReference>System.Memory</AssemblyReference>
+      <AssemblyReference>System.Private.Uri</AssemblyReference>
+      <AssemblyReference>System.Linq.Async</AssemblyReference>
+      <AssemblyReference>System.Collections</AssemblyReference>
+      <AssemblyReference>System.Collections.NonGeneric</AssemblyReference>
+      <AssemblyReference>System.Linq.Expressions</AssemblyReference>
+      <AssemblyReference>UiPath.Testing.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Excel.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Mail.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationCore</AssemblyReference>
+      <AssemblyReference>UiPath.OCR.Activities</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="creating_db" sap:VirtualizedContainerService.HintSize="887,393" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="creating_db" sap:VirtualizedContainerService.HintSize="1282,1108" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:String" Name="strDBConnection" />
+      <Variable x:TypeArguments="x:String" Default="DESKTOP-DBHPI74\SQLEXPRESS" Name="datasource" />
+      <Variable x:TypeArguments="x:String" Default="final_project" Name="db" />
+      <Variable x:TypeArguments="x:String" Name="username" />
+      <Variable x:TypeArguments="x:String" Name="pwd" />
+      <Variable x:TypeArguments="x:String" Name="create_ProductTable" />
+      <Variable x:TypeArguments="x:String" Name="borrar_TablaProducto" />
+      <Variable x:TypeArguments="x:String" Name="borrar_TablaClientes" />
+      <Variable x:TypeArguments="x:String" Name="borrar_TablaVentas" />
+      <Variable x:TypeArguments="x:String" Name="create_TablaClientes" />
+      <Variable x:TypeArguments="x:String" Name="create_TablaVentas" />
+      <Variable x:TypeArguments="x:String" Name="borrar_TablaPedidos" />
+      <Variable x:TypeArguments="x:String" Name="create_TablaPedidos" />
+    </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <Assign DisplayName="Inicializar la variable de conexión a la BBDD" sap:VirtualizedContainerService.HintSize="434,114" sap2010:WorkflowViewState.IdRef="Assign_1">
+    <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="credentials - Invoke Workflow File (DB\Credentials\credentials.xaml)" sap:VirtualizedContainerService.HintSize="479,204" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="DB\Credentials\credentials.xaml">
+      <ui:InvokeWorkflowFile.Arguments>
+        <OutArgument x:TypeArguments="x:String" x:Key="out_username">[username]</OutArgument>
+        <OutArgument x:TypeArguments="x:String" x:Key="out_pwd">[pwd]</OutArgument>
+      </ui:InvokeWorkflowFile.Arguments>
+    </ui:InvokeWorkflowFile>
+    <ui:MultipleAssign DisplayName="Multiple Assign" sap:VirtualizedContainerService.HintSize="479,365" sap2010:WorkflowViewState.IdRef="MultipleAssign_1">
+      <ui:MultipleAssign.AssignOperations>
+        <scg:List x:TypeArguments="ui:AssignOperation" Capacity="8">
+          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_1">
+            <ui:AssignOperation.To>
+              <OutArgument x:TypeArguments="x:String">[create_ProductTable]</OutArgument>
+            </ui:AssignOperation.To>
+            <ui:AssignOperation.Value>
+              <InArgument x:TypeArguments="x:String" xml:space="preserve">CREATE TABLE productos(
+	id bigint identity primary key, 
+	nombre varchar(200),
+	stock tinyint,
+	tipo varchar (12),
+	referencia bigint,
+	precio decimal(4,2)
+);</InArgument>
+            </ui:AssignOperation.Value>
+          </ui:AssignOperation>
+          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_2">
+            <ui:AssignOperation.To>
+              <OutArgument x:TypeArguments="x:String">[borrar_TablaProducto]</OutArgument>
+            </ui:AssignOperation.To>
+            <ui:AssignOperation.Value>
+              <InArgument x:TypeArguments="x:String">DROP TABLE IF EXISTS productos;</InArgument>
+            </ui:AssignOperation.Value>
+          </ui:AssignOperation>
+          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_3">
+            <ui:AssignOperation.To>
+              <OutArgument x:TypeArguments="x:String">[borrar_TablaClientes]</OutArgument>
+            </ui:AssignOperation.To>
+            <ui:AssignOperation.Value>
+              <InArgument x:TypeArguments="x:String">DROP TABLE IF EXISTS clientes;</InArgument>
+            </ui:AssignOperation.Value>
+          </ui:AssignOperation>
+          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_4">
+            <ui:AssignOperation.To>
+              <OutArgument x:TypeArguments="x:String">[borrar_TablaVentas]</OutArgument>
+            </ui:AssignOperation.To>
+            <ui:AssignOperation.Value>
+              <InArgument x:TypeArguments="x:String">DROP TABLE IF EXISTS ventas;</InArgument>
+            </ui:AssignOperation.Value>
+          </ui:AssignOperation>
+          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_5">
+            <ui:AssignOperation.To>
+              <OutArgument x:TypeArguments="x:String">[create_TablaClientes]</OutArgument>
+            </ui:AssignOperation.To>
+            <ui:AssignOperation.Value>
+              <InArgument x:TypeArguments="x:String" xml:space="preserve">CREATE TABLE clientes (
+	id tinyint identity primary key,
+	nombre varchar (55),
+	apellidos varchar (100),
+	email varchar (150)
+);</InArgument>
+            </ui:AssignOperation.Value>
+          </ui:AssignOperation>
+          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_6">
+            <ui:AssignOperation.To>
+              <OutArgument x:TypeArguments="x:String">[create_TablaVentas]</OutArgument>
+            </ui:AssignOperation.To>
+            <ui:AssignOperation.Value>
+              <InArgument x:TypeArguments="x:String" xml:space="preserve">CREATE TABLE ventas (
+	id tinyint identity primary key,
+	id_cliente tinyint,
+	fecha date,
+	importe decimal(6,2),
+	constraint fk_ventas_clientes 
+	foreign key (id_cliente) 
+	references clientes(id)
+);</InArgument>
+            </ui:AssignOperation.Value>
+          </ui:AssignOperation>
+          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_7">
+            <ui:AssignOperation.To>
+              <OutArgument x:TypeArguments="x:String">[borrar_TablaPedidos]</OutArgument>
+            </ui:AssignOperation.To>
+            <ui:AssignOperation.Value>
+              <InArgument x:TypeArguments="x:String">DROP TABLE IF EXISTS pedidos;</InArgument>
+            </ui:AssignOperation.Value>
+          </ui:AssignOperation>
+          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_8">
+            <ui:AssignOperation.To>
+              <OutArgument x:TypeArguments="x:String">[create_TablaPedidos]</OutArgument>
+            </ui:AssignOperation.To>
+            <ui:AssignOperation.Value>
+              <InArgument x:TypeArguments="x:String" xml:space="preserve">CREATE TABLE pedidos (
+	id tinyint identity primary key,
+	fecha date,
+	importe decimal(6,2)
+);</InArgument>
+            </ui:AssignOperation.Value>
+          </ui:AssignOperation>
+        </scg:List>
+      </ui:MultipleAssign.AssignOperations>
+    </ui:MultipleAssign>
+    <Assign DisplayName="Inicializar la variable de conexión a la BBDD" sap:VirtualizedContainerService.HintSize="479,114" sap2010:WorkflowViewState.IdRef="Assign_1">
       <Assign.To>
-        <OutArgument x:TypeArguments="x:String">[io_strDBConnection]</OutArgument>
+        <OutArgument x:TypeArguments="x:String">[strDBConnection]</OutArgument>
       </Assign.To>
       <Assign.Value>
-        <InArgument x:TypeArguments="x:String">["Data Source="+ in_datasource + ";Initial Catalog=" + in_db + ";User ID=" + in_usr +";Password="+ in_pwd + ";Encrypt=False"]</InArgument>
+        <InArgument x:TypeArguments="x:String">["Data Source="+datasource+ ";Initial Catalog=" + db + ";User ID=" + username +";Password="+ pwd + ";Encrypt=False"]</InArgument>
       </Assign.Value>
     </Assign>
-    <ui:LogMessage DisplayName="Registrar mensaje" sap:VirtualizedContainerService.HintSize="434,173" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Establecemos conexión con la Base de Datos&quot;]" />
-    <ui:DatabaseConnect DisplayName="Conectar a base de datos" sap:VirtualizedContainerService.HintSize="434,83" sap2010:WorkflowViewState.IdRef="DatabaseConnect_1" ProviderName="System.Data.Odbc" ConnectionString="[io_strDBConnection]" DatabaseConnection="[out_dbConnection]" />
+    <ui:LogMessage DisplayName="Registrar mensaje" sap:VirtualizedContainerService.HintSize="479,173" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Establecemos conexión con la Base de Datos&quot;]" />
+    <ui:DatabaseConnect DisplayName="Connect to Database" sap:VirtualizedContainerService.HintSize="479,92" sap2010:WorkflowViewState.IdRef="DatabaseConnect_2" ProviderName="Microsoft.Data.SqlClient" ConnectionString="[strDBConnection]" DatabaseConnection="[out_dbConnection]" />
+    <ui:ExecuteQuery ContinueOnError="{x:Null}" DataTable="{x:Null}" TimeoutMS="{x:Null}" DisplayName="Run Query" ExistingDbConnection="[out_dbConnection]" sap:VirtualizedContainerService.HintSize="479,137" sap2010:WorkflowViewState.IdRef="ExecuteQuery_1" Sql="[borrar_TablaVentas + borrar_TablaProducto + borrar_TablaPedidos +  borrar_TablaClientes  + create_ProductTable + create_TablaClientes + create_TablaVentas + create_TablaPedidos]">
+      <ui:ExecuteQuery.Parameters>
+        <scg:Dictionary x:TypeArguments="x:String, Argument" />
+      </ui:ExecuteQuery.Parameters>
+    </ui:ExecuteQuery>
   </Sequence>
 </Activity>
