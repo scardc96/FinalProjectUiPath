@@ -1,4 +1,4 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="ObtenerStock" VisualBasic.Settings="{x:Null}" sap2010:WorkflowViewState.IdRef="ObtenerStock_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data.Common" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="ObtenerStock" VisualBasic.Settings="{x:Null}" sap2010:WorkflowViewState.IdRef="ObtenerStock_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
       <x:String>System.Activities</x:String>
@@ -99,21 +99,29 @@
       <AssemblyReference>System.Runtime.Numerics</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="ObtenerStock" sap:VirtualizedContainerService.HintSize="1282,415" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <sap:WorkflowViewStateService.ViewState>
+    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+      <x:Boolean x:Key="ShouldCollapseAll">False</x:Boolean>
+    </scg:Dictionary>
+  </sap:WorkflowViewStateService.ViewState>
+  <Sequence DisplayName="ObtenerStock" sap:VirtualizedContainerService.HintSize="1282,529" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
-      <Variable x:TypeArguments="sd:DataTable" Name="tablaCliente" />
-      <Variable x:TypeArguments="x:String" Name="TablaClienteTxT" />
-      <Variable x:TypeArguments="x:Int32" Name="NumClientes" />
-      <Variable x:TypeArguments="x:Int32" Name="Numero" />
-      <Variable x:TypeArguments="scg:List(x:String)" Default="[New List (of String) from {&quot;Cliente1&quot;, &quot;Cliente2&quot;, &quot;Cliente3&quot;, &quot;Cliente4&quot;,&quot;Cliente5&quot;,&quot;Cliente6&quot;,&quot;Cliente7&quot;}]" Name="ListaC" />
-      <Variable x:TypeArguments="x:Int32" Default="6" Name="LargoLista" />
+      <Variable x:TypeArguments="scg:List(x:String)" Name="ListaC" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:InterruptibleDoWhile CurrentIndex="{x:Null}" Condition="[Numero &gt; 0]" DisplayName="Hacer mientras" sap:VirtualizedContainerService.HintSize="450,392" sap2010:WorkflowViewState.IdRef="InterruptibleDoWhile_1">
+    <Assign sap:VirtualizedContainerService.HintSize="450,114" sap2010:WorkflowViewState.IdRef="Assign_1">
+      <Assign.To>
+        <OutArgument x:TypeArguments="scg:List(x:String)">[ListaC]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="scg:List(x:String)">[New List (of String) from {"Cliente1", "Cliente2", "Cliente3", "Cliente4","Cliente5","Cliente6","Cliente7"}]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <ui:InterruptibleDoWhile CurrentIndex="{x:Null}" DisplayName="Hacer mientras" sap:VirtualizedContainerService.HintSize="450,392" sap2010:WorkflowViewState.IdRef="InterruptibleDoWhile_1">
       <ui:InterruptibleDoWhile.Body>
         <Sequence DisplayName="Cuerpo" sap:VirtualizedContainerService.HintSize="416,255" sap2010:WorkflowViewState.IdRef="Sequence_8">
           <sap:WorkflowViewStateService.ViewState>
@@ -123,13 +131,14 @@
           </sap:WorkflowViewStateService.ViewState>
           <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="ObtenerPedCliente - Invoke Workflow File (ProcessOrder\ObtenerPedCliente.xaml)" sap:VirtualizedContainerService.HintSize="382,195" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="ProcessOrder\ObtenerPedCliente.xaml">
             <ui:InvokeWorkflowFile.Arguments>
-              <OutArgument x:TypeArguments="x:Int32" x:Key="out_numero">[Numero]</OutArgument>
               <InArgument x:TypeArguments="scg:List(x:String)" x:Key="in_ListaC">[ListaC]</InArgument>
-              <InArgument x:TypeArguments="sd:DataTable" x:Key="out_tablaCliente">[tablaCliente]</InArgument>
             </ui:InvokeWorkflowFile.Arguments>
           </ui:InvokeWorkflowFile>
         </Sequence>
       </ui:InterruptibleDoWhile.Body>
+      <ui:InterruptibleDoWhile.Condition>
+        <VisualBasicValue x:TypeArguments="x:Boolean" DisplayName="Visual basic value" ExpressionText="listaC.Count &gt; 0" />
+      </ui:InterruptibleDoWhile.Condition>
     </ui:InterruptibleDoWhile>
   </Sequence>
 </Activity>

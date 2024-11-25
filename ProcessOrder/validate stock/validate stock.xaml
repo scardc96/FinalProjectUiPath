@@ -5,7 +5,9 @@
     <x:Property Name="in_stock" Type="InArgument(x:Int32)" />
     <x:Property Name="in_dbConnection" Type="InArgument(ui:DatabaseConnection)" />
     <x:Property Name="io_amount" Type="InOutArgument(x:Double)" />
-    <x:Property Name="io_order" Type="InOutArgument(x:String)" />
+    <x:Property Name="io_cumulativeOrder" Type="InOutArgument(x:String)" />
+    <x:Property Name="io_cumulativeLack" Type="InOutArgument(x:String)" />
+    <x:Property Name="io_cumulativeZero" Type="InOutArgument(x:String)" />
   </x:Members>
   <VisualBasic.Settings>
     <x:Null />
@@ -117,7 +119,7 @@
       <If.Then>
         <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="513,732" sap2010:WorkflowViewState.IdRef="Sequence_2">
           <Sequence.Variables>
-            <Variable x:TypeArguments="x:Double" Name="price" />
+            <Variable x:TypeArguments="x:Double" Name="unitPrice" />
             <Variable x:TypeArguments="sd:DataTable" Name="priceTable" />
           </Sequence.Variables>
           <sap:WorkflowViewStateService.ViewState>
@@ -162,7 +164,7 @@
               <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
                 <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_3">
                   <ui:AssignOperation.To>
-                    <OutArgument x:TypeArguments="x:Double">[price]</OutArgument>
+                    <OutArgument x:TypeArguments="x:Double">[unitPrice]</OutArgument>
                   </ui:AssignOperation.To>
                   <ui:AssignOperation.Value>
                     <InArgument x:TypeArguments="x:Double">[Double.Parse(priceTable.Rows(0)(0).ToString)]</InArgument>
@@ -173,15 +175,16 @@
                     <OutArgument x:TypeArguments="x:Double">[io_amount]</OutArgument>
                   </ui:AssignOperation.To>
                   <ui:AssignOperation.Value>
-                    <InArgument x:TypeArguments="x:Double">[io_amount + price*in_quantity]</InArgument>
+                    <InArgument x:TypeArguments="x:Double">[io_amount + Math.Round(unitPrice*in_quantity,2)]</InArgument>
                   </ui:AssignOperation.Value>
                 </ui:AssignOperation>
                 <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_5">
                   <ui:AssignOperation.To>
-                    <OutArgument x:TypeArguments="x:String">[io_order]</OutArgument>
+                    <OutArgument x:TypeArguments="x:String">[io_cumulativeOrder]</OutArgument>
                   </ui:AssignOperation.To>
                   <ui:AssignOperation.Value>
-                    <InArgument x:TypeArguments="x:String" xml:space="preserve">[io_order + "Referencia: " + in_barcode  + ". Cantidad del producto: " + in_quantity.ToString + ". Importe: " + (price*in_quantity).ToString]</InArgument>
+                    <InArgument x:TypeArguments="x:String" xml:space="preserve">[io_cumulativeOrder + "- Referencia: " + in_barcode  + ". Cantidad del producto: " + in_quantity.ToString + " uds. Importe: " + (Math.Round(unitPrice*in_quantity,2)).ToString + " €.
+"]</InArgument>
                   </ui:AssignOperation.Value>
                 </ui:AssignOperation>
               </scg:List>
@@ -203,7 +206,7 @@
                   <Variable x:TypeArguments="x:String" Name="selectPrice" />
                   <Variable x:TypeArguments="x:String" Name="updateRow" />
                   <Variable x:TypeArguments="sd:DataTable" Name="priceTable" />
-                  <Variable x:TypeArguments="x:Double" Name="price" />
+                  <Variable x:TypeArguments="x:Double" Name="unitPrice" />
                 </Sequence.Variables>
                 <sap:WorkflowViewStateService.ViewState>
                   <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -247,7 +250,7 @@
                     <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
                       <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_8">
                         <ui:AssignOperation.To>
-                          <OutArgument x:TypeArguments="x:Double">[price]</OutArgument>
+                          <OutArgument x:TypeArguments="x:Double">[unitPrice]</OutArgument>
                         </ui:AssignOperation.To>
                         <ui:AssignOperation.Value>
                           <InArgument x:TypeArguments="x:Double">[Double.Parse(priceTable.Rows(0)(0).ToString)]</InArgument>
@@ -258,15 +261,16 @@
                           <OutArgument x:TypeArguments="x:Double">[io_amount]</OutArgument>
                         </ui:AssignOperation.To>
                         <ui:AssignOperation.Value>
-                          <InArgument x:TypeArguments="x:Double">[io_amount + price*in_stock]</InArgument>
+                          <InArgument x:TypeArguments="x:Double">[io_amount + Math.Round(unitPrice*in_stock,2)]</InArgument>
                         </ui:AssignOperation.Value>
                       </ui:AssignOperation>
                       <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_10">
                         <ui:AssignOperation.To>
-                          <OutArgument x:TypeArguments="x:String">[io_order]</OutArgument>
+                          <OutArgument x:TypeArguments="x:String">[io_cumulativeLack]</OutArgument>
                         </ui:AssignOperation.To>
                         <ui:AssignOperation.Value>
-                          <InArgument x:TypeArguments="x:String" xml:space="preserve">[io_order + "Lo sentimos, no tenemos suficiente stock del producto con referencia: " + in_barcode  + ". Cantidad del producto: " + in_stock.ToString + ". Importe: " + (price*in_stock).ToString]</InArgument>
+                          <InArgument x:TypeArguments="x:String" xml:space="preserve">[io_cumulativeLack + "- Referencia: " + in_barcode  + ".  Cantidad del producto:  En lugar de " + in_quantity.ToString + "uds, son " + in_stock.ToString + " uds. Importe: " + Math.Round(unitPrice*in_stock,2).ToString + " €.
+"]</InArgument>
                         </ui:AssignOperation.Value>
                       </ui:AssignOperation>
                     </scg:List>
@@ -283,10 +287,10 @@
                 </sap:WorkflowViewStateService.ViewState>
                 <Assign sap:VirtualizedContainerService.HintSize="434,105" sap2010:WorkflowViewState.IdRef="Assign_1">
                   <Assign.To>
-                    <OutArgument x:TypeArguments="x:String">[io_order]</OutArgument>
+                    <OutArgument x:TypeArguments="x:String">[io_cumulativeZero]</OutArgument>
                   </Assign.To>
                   <Assign.Value>
-                    <InArgument x:TypeArguments="x:String">[io_order + "Lo sentimos, no tenemos ninguna unidad del producto con referencia " + in_barcode.ToString]</InArgument>
+                    <InArgument x:TypeArguments="x:String">[io_cumulativeZero + in_barcode.ToString + " / "]</InArgument>
                   </Assign.Value>
                 </Assign>
               </Sequence>

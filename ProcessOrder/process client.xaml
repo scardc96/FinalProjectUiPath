@@ -3,7 +3,12 @@
     <x:Property Name="in_barcode" Type="InArgument(x:String)" />
     <x:Property Name="in_quantity" Type="InArgument(x:String)" />
     <x:Property Name="io_amount" Type="InOutArgument(x:Double)" />
-    <x:Property Name="io_order" Type="InOutArgument(x:String)" />
+    <x:Property Name="out_email" Type="OutArgument(x:String)" />
+    <x:Property Name="in_NumCliente" Type="InArgument(x:String)" />
+    <x:Property Name="out_fullname" Type="OutArgument(x:String)" />
+    <x:Property Name="io_cumulativeOrder" Type="InOutArgument(x:String)" />
+    <x:Property Name="io_cumulativeLack" Type="InOutArgument(x:String)" />
+    <x:Property Name="io_cumulativeZero" Type="InOutArgument(x:String)" />
   </x:Members>
   <VisualBasic.Settings>
     <x:Null />
@@ -100,12 +105,18 @@
       <AssemblyReference>System.Runtime.InteropServices</AssemblyReference>
       <AssemblyReference>UiPath.Database.Activities</AssemblyReference>
       <AssemblyReference>System.Data.SqlClient</AssemblyReference>
+      <AssemblyReference>System.Linq.Async.Queryable</AssemblyReference>
+      <AssemblyReference>System.Linq.Parallel</AssemblyReference>
+      <AssemblyReference>System.Collections.Immutable</AssemblyReference>
+      <AssemblyReference>System.Linq.Queryable</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="process_client" sap:VirtualizedContainerService.HintSize="547,1288" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="process_client" sap:VirtualizedContainerService.HintSize="1282,1667" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="ui:DatabaseConnection" Name="dbConnection" />
       <Variable x:TypeArguments="x:Int32" Name="quantity" />
+      <Variable x:TypeArguments="x:String" Name="selectClient" />
+      <Variable x:TypeArguments="sd:DataTable" Name="clientRow" />
     </Sequence.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -117,7 +128,20 @@
         <OutArgument x:TypeArguments="ui:DatabaseConnection" x:Key="out_dbConnection">[dbConnection]</OutArgument>
       </ui:InvokeWorkflowFile.Arguments>
     </ui:InvokeWorkflowFile>
-    <ui:MultipleAssign DisplayName="Tomamos la cantidad de productos que quiere el cliente como valor entero" sap:VirtualizedContainerService.HintSize="547,148" sap2010:WorkflowViewState.IdRef="MultipleAssign_2">
+    <Assign sap:VirtualizedContainerService.HintSize="547,114" sap2010:WorkflowViewState.IdRef="Assign_3">
+      <Assign.To>
+        <OutArgument x:TypeArguments="x:String">[selectClient]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="x:String">["SELECT * FROM clientes WHERE id=" + in_NumCliente + ";"]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <ui:ExecuteQuery ContinueOnError="{x:Null}" TimeoutMS="{x:Null}" DataTable="[clientRow]" DisplayName="Run Query" ExistingDbConnection="[dbConnection]" sap:VirtualizedContainerService.HintSize="547,146" sap2010:WorkflowViewState.IdRef="ExecuteQuery_2" Sql="[selectClient]">
+      <ui:ExecuteQuery.Parameters>
+        <scg:Dictionary x:TypeArguments="x:String, Argument" />
+      </ui:ExecuteQuery.Parameters>
+    </ui:ExecuteQuery>
+    <ui:MultipleAssign DisplayName="Tomamos la cantidad de productos que quiere el cliente como valor entero" sap:VirtualizedContainerService.HintSize="547,210" sap2010:WorkflowViewState.IdRef="MultipleAssign_2">
       <ui:MultipleAssign.AssignOperations>
         <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
           <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_2">
@@ -128,10 +152,26 @@
               <InArgument x:TypeArguments="x:Int32">[Integer.Parse(in_quantity)]</InArgument>
             </ui:AssignOperation.Value>
           </ui:AssignOperation>
+          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_4">
+            <ui:AssignOperation.To>
+              <OutArgument x:TypeArguments="x:String">[out_email]</OutArgument>
+            </ui:AssignOperation.To>
+            <ui:AssignOperation.Value>
+              <InArgument x:TypeArguments="x:String">[clientRow(0)("email").ToString]</InArgument>
+            </ui:AssignOperation.Value>
+          </ui:AssignOperation>
+          <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_5">
+            <ui:AssignOperation.To>
+              <OutArgument x:TypeArguments="x:String">[out_fullname]</OutArgument>
+            </ui:AssignOperation.To>
+            <ui:AssignOperation.Value>
+              <InArgument x:TypeArguments="x:String">[clientRow(0)("nombre").ToString + " " +clientRow(0)("apellidos").ToString]</InArgument>
+            </ui:AssignOperation.Value>
+          </ui:AssignOperation>
         </scg:List>
       </ui:MultipleAssign.AssignOperations>
     </ui:MultipleAssign>
-    <If Condition="[quantity &gt; 0]" sap:VirtualizedContainerService.HintSize="547,913" sap2010:WorkflowViewState.IdRef="If_1">
+    <If Condition="[quantity &gt; 0]" sap:VirtualizedContainerService.HintSize="547,922" sap2010:WorkflowViewState.IdRef="If_1">
       <If.Then>
         <Sequence DisplayName="Then" sap:VirtualizedContainerService.HintSize="513,663" sap2010:WorkflowViewState.IdRef="Sequence_2">
           <Sequence.Variables>
@@ -171,14 +211,16 @@
               <InArgument x:TypeArguments="x:Int32">[Integer.Parse(stockData.Rows(0)(0).ToString)]</InArgument>
             </Assign.Value>
           </Assign>
-          <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="validate stock - Invoke Workflow File (Daily turnover\Process Data\validate stock\validate stock.xaml)" sap:VirtualizedContainerService.HintSize="479,195" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Daily turnover\Process Data\validate stock\validate stock.xaml">
+          <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="validate stock - Invoke Workflow File (ProcessOrder\validate stock\validate stock.xaml)" sap:VirtualizedContainerService.HintSize="479,195" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="ProcessOrder\validate stock\validate stock.xaml">
             <ui:InvokeWorkflowFile.Arguments>
               <InArgument x:TypeArguments="x:String" x:Key="in_barcode">[in_barcode]</InArgument>
               <InArgument x:TypeArguments="x:Int32" x:Key="in_quantity">[quantity]</InArgument>
               <InArgument x:TypeArguments="x:Int32" x:Key="in_stock">[stock]</InArgument>
               <InArgument x:TypeArguments="ui:DatabaseConnection" x:Key="in_dbConnection">[dbConnection]</InArgument>
               <InOutArgument x:TypeArguments="x:Double" x:Key="io_amount">[io_amount]</InOutArgument>
-              <InOutArgument x:TypeArguments="x:String" x:Key="io_order">[io_order]</InOutArgument>
+              <InOutArgument x:TypeArguments="x:String" x:Key="io_cumulativeOrder">[io_cumulativeOrder]</InOutArgument>
+              <InOutArgument x:TypeArguments="x:String" x:Key="io_cumulativeLack">[io_cumulativeLack]</InOutArgument>
+              <InOutArgument x:TypeArguments="x:String" x:Key="io_cumulativeZero">[io_cumulativeZero]</InOutArgument>
             </ui:InvokeWorkflowFile.Arguments>
           </ui:InvokeWorkflowFile>
         </Sequence>
@@ -193,5 +235,6 @@
         </Sequence>
       </If.Else>
     </If>
+    <ui:DatabaseDisconnect DatabaseConnection="[dbConnection]" DisplayName="Disconnect from Database" sap:VirtualizedContainerService.HintSize="547,48" sap2010:WorkflowViewState.IdRef="DatabaseDisconnect_1" />
   </Sequence>
 </Activity>
