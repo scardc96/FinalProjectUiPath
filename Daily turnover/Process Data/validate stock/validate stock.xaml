@@ -100,9 +100,10 @@
       <AssemblyReference>System.Collections</AssemblyReference>
       <AssemblyReference>System.Collections.NonGeneric</AssemblyReference>
       <AssemblyReference>System.Runtime.Numerics</AssemblyReference>
+      <AssemblyReference>System.Data.SqlClient</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="validate_stock" sap:VirtualizedContainerService.HintSize="1282,2034" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="validate_stock" sap:VirtualizedContainerService.HintSize="615,2034" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:String" Name="selectPrice" />
       <Variable x:TypeArguments="x:String" Name="updateRow" />
@@ -164,7 +165,7 @@
                     <OutArgument x:TypeArguments="x:Double">[price]</OutArgument>
                   </ui:AssignOperation.To>
                   <ui:AssignOperation.Value>
-                    <InArgument x:TypeArguments="x:Double">[Double.Parse(priceTable.Rows(0).ToString)]</InArgument>
+                    <InArgument x:TypeArguments="x:Double">[Double.Parse(priceTable.Rows(0)(0).ToString)]</InArgument>
                   </ui:AssignOperation.Value>
                 </ui:AssignOperation>
                 <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_4">
@@ -249,7 +250,7 @@
                           <OutArgument x:TypeArguments="x:Double">[price]</OutArgument>
                         </ui:AssignOperation.To>
                         <ui:AssignOperation.Value>
-                          <InArgument x:TypeArguments="x:Double">[Double.Parse(priceTable.Rows(0).ToString)]</InArgument>
+                          <InArgument x:TypeArguments="x:Double">[Double.Parse(priceTable.Rows(0)(0).ToString)]</InArgument>
                         </ui:AssignOperation.Value>
                       </ui:AssignOperation>
                       <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_9">

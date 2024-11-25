@@ -102,7 +102,7 @@
       <AssemblyReference>System.Data.SqlClient</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="process_client" sap:VirtualizedContainerService.HintSize="1282,1288" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="process_client" sap:VirtualizedContainerService.HintSize="547,1288" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="ui:DatabaseConnection" Name="dbConnection" />
       <Variable x:TypeArguments="x:Int32" Name="quantity" />
@@ -168,7 +168,7 @@
               <OutArgument x:TypeArguments="x:Int32">[stock]</OutArgument>
             </Assign.To>
             <Assign.Value>
-              <InArgument x:TypeArguments="x:Int32">[Integer.Parse(stockData.Rows(0).ToString)]</InArgument>
+              <InArgument x:TypeArguments="x:Int32">[Integer.Parse(stockData.Rows(0)(0).ToString)]</InArgument>
             </Assign.Value>
           </Assign>
           <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="validate stock - Invoke Workflow File (Daily turnover\Process Data\validate stock\validate stock.xaml)" sap:VirtualizedContainerService.HintSize="479,195" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Daily turnover\Process Data\validate stock\validate stock.xaml">

@@ -1,6 +1,6 @@
 <Activity mc:Ignorable="sap sap2010" x:Class="creating_db" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
-    <x:Property Name="io_dbConnection" Type="OutArgument(ui:DatabaseConnection)" />
+    <x:Property Name="out_dbConnection" Type="OutArgument(ui:DatabaseConnection)" />
   </x:Members>
   <VisualBasic.Settings>
     <x:Null />
@@ -229,15 +229,15 @@
     </ui:MultipleAssign>
     <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" ContinueOnError="{x:Null}" DisplayName="connection - Invoke Workflow File (DB\Connection\connection.xaml)" sap:VirtualizedContainerService.HintSize="479,204" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="DB\Connection\connection.xaml">
       <ui:InvokeWorkflowFile.Arguments>
-        <OutArgument x:TypeArguments="ui:DatabaseConnection" x:Key="out_dbConnection">[io_dbConnection]</OutArgument>
+        <OutArgument x:TypeArguments="ui:DatabaseConnection" x:Key="out_dbConnection">[out_dbConnection]</OutArgument>
       </ui:InvokeWorkflowFile.Arguments>
     </ui:InvokeWorkflowFile>
-    <ui:ExecuteQuery ContinueOnError="{x:Null}" DataTable="{x:Null}" TimeoutMS="{x:Null}" DisplayName="Run Query" ExistingDbConnection="[io_dbConnection]" sap:VirtualizedContainerService.HintSize="479,146" sap2010:WorkflowViewState.IdRef="ExecuteQuery_1" Sql="[borrar_TablaVentas + borrar_TablaProducto + borrar_TablaPedidos +  borrar_TablaClientes  + create_ProductTable + create_TablaClientes + create_TablaVentas + create_TablaPedidos]">
+    <ui:ExecuteQuery ContinueOnError="{x:Null}" DataTable="{x:Null}" TimeoutMS="{x:Null}" DisplayName="Run Query" ExistingDbConnection="[out_dbConnection]" sap:VirtualizedContainerService.HintSize="479,146" sap2010:WorkflowViewState.IdRef="ExecuteQuery_1" Sql="[borrar_TablaVentas + borrar_TablaProducto + borrar_TablaPedidos +  borrar_TablaClientes  + create_ProductTable + create_TablaClientes + create_TablaVentas + create_TablaPedidos]">
       <ui:ExecuteQuery.Parameters>
         <scg:Dictionary x:TypeArguments="x:String, Argument" />
       </ui:ExecuteQuery.Parameters>
     </ui:ExecuteQuery>
-    <ui:ExecuteNonQuery AffectedRecords="{x:Null}" ContinueOnError="{x:Null}" TimeoutMS="{x:Null}" DisplayName="Run Command" ExistingDbConnection="[io_dbConnection]" sap:VirtualizedContainerService.HintSize="479,137" sap2010:WorkflowViewState.IdRef="ExecuteNonQuery_1" Sql="[insertClients]">
+    <ui:ExecuteNonQuery AffectedRecords="{x:Null}" ContinueOnError="{x:Null}" TimeoutMS="{x:Null}" DisplayName="Run Command" ExistingDbConnection="[out_dbConnection]" sap:VirtualizedContainerService.HintSize="479,137" sap2010:WorkflowViewState.IdRef="ExecuteNonQuery_1" Sql="[insertClients]">
       <ui:ExecuteNonQuery.Parameters>
         <scg:Dictionary x:TypeArguments="x:String, Argument" />
       </ui:ExecuteNonQuery.Parameters>
