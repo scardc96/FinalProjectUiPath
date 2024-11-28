@@ -17,7 +17,7 @@
       "AddedNamespaces": null
     },
     {
-      "Path": "Scraping Price/Scraping Dia/scrapingDia.xaml",
+      "Path": "Scraping Price AND Storage Data/Calculate Price/Scraping Dia/scrapingDia.xaml",
       "SortBy": 0,
       "VariablesSectionElementsOrder": [
         "objectPrice&Sequence_2"
@@ -31,28 +31,18 @@
       "AddedNamespaces": null
     },
     {
-      "Path": "Scraping Price/Storage.xaml",
+      "Path": "Scraping Price AND Storage Data/Storage.xaml",
       "SortBy": 0,
       "VariablesSectionElementsOrder": [
-        "priceECI&Sequence_7",
-        "priceCarrefour&Sequence_7",
-        "cantDistinctPrices&Sequence_7",
-        "priceDia&Sequence_7",
-        "urlDia&Sequence_7",
-        "urlECI&Sequence_7",
-        "urlCarrefour&Sequence_7",
-        "insertData&Sequence_7",
         "dbConnection&Sequence_1",
-        "barcode&Sequence_1",
-        "excelPath&Sequence_1",
-        "precio&Sequence_1"
+        "excelPath&Sequence_1"
       ],
       "ArgumentsSectionElementsOrder": [],
       "ConstantsSectionElementsOrder": [],
       "AddedNamespaces": null
     },
     {
-      "Path": "Scraping Price/Scraping ECI/ECI.xaml",
+      "Path": "Scraping Price AND Storage Data/Calculate Price/Scraping ECI/ECI.xaml",
       "SortBy": 0,
       "VariablesSectionElementsOrder": [
         "objectPrice&Sequence_2"
@@ -66,9 +56,11 @@
       "AddedNamespaces": null
     },
     {
-      "Path": "Scraping Price/DB/creating db.xaml",
+      "Path": "Scraping Price AND Storage Data/DB/Creating DB/creating db.xaml",
       "SortBy": 0,
       "VariablesSectionElementsOrder": [
+        "borrar_tablaProductosDistribuidor&Sequence_1",
+        "create_tablaProductosDistribuidor&Sequence_1",
         "insertClients&Sequence_1",
         "create_TablaVentas&Sequence_1",
         "create_TablaClientes&Sequence_1",
@@ -77,12 +69,7 @@
         "borrar_TablaClientes&Sequence_1",
         "borrar_TablaVentas&Sequence_1",
         "borrar_TablaProducto&Sequence_1",
-        "create_ProductTable&Sequence_1",
-        "pwd&Sequence_1",
-        "username&Sequence_1",
-        "db&Sequence_1",
-        "datasource&Sequence_1",
-        "strDBConnection&Sequence_1"
+        "create_ProductTable&Sequence_1"
       ],
       "ArgumentsSectionElementsOrder": [
         "out_dbConnection"
@@ -99,7 +86,7 @@
       "AddedNamespaces": null
     },
     {
-      "Path": "Scraping Price/Scraping Carrefour/ScrapingDataCarrefour.xaml",
+      "Path": "Scraping Price AND Storage Data/Calculate Price/Scraping Carrefour/ScrapingDataCarrefour.xaml",
       "SortBy": 0,
       "VariablesSectionElementsOrder": [
         "objectpricecarrefour&Sequence_1"
@@ -113,14 +100,23 @@
       "AddedNamespaces": null
     },
     {
-      "Path": "Scraping Price/Calculate Price/Escritura Precios.xaml",
+      "Path": "Scraping Price AND Storage Data/Calculate Price/WritingPrice.xaml",
       "SortBy": 0,
       "VariablesSectionElementsOrder": [
-        "Precio&Sequence_1"
+        "priceECI&Sequence_9",
+        "priceCarrefour&Sequence_9",
+        "cantDistinctPrices&Sequence_9",
+        "priceDia&Sequence_9",
+        "insertData&Sequence_9",
+        "barcode&Sequence_9",
+        "price&Sequence_9",
+        "urlCarrefour&Sequence_1",
+        "urlECI&Sequence_1",
+        "urlDia&Sequence_1"
       ],
       "ArgumentsSectionElementsOrder": [
-        "in_excelPath",
-        "in_precio"
+        "in_dbConnection",
+        "in_excelPath"
       ],
       "ConstantsSectionElementsOrder": [],
       "AddedNamespaces": null
@@ -139,7 +135,7 @@
       "AddedNamespaces": null
     },
     {
-      "Path": "Scraping Price/Validate Price/validate.xaml",
+      "Path": "Scraping Price AND Storage Data/Calculate Price/Validate Price/validate.xaml",
       "SortBy": 0,
       "VariablesSectionElementsOrder": [],
       "ArgumentsSectionElementsOrder": [
@@ -155,6 +151,8 @@
       "Path": "Test/test.xaml",
       "SortBy": 0,
       "VariablesSectionElementsOrder": [
+        "stockAfter&Sequence_6",
+        "stockBefore&Sequence_6",
         "EmailList&Sequence_1"
       ],
       "ArgumentsSectionElementsOrder": [],
@@ -162,68 +160,100 @@
       "AddedNamespaces": null
     },
     {
-      "Path": "Daily turnover/Process Data/process client.xaml",
+      "Path": "ProcessOrder/GetClientOrder/order/order.xaml",
       "SortBy": 0,
       "VariablesSectionElementsOrder": [
-        "dbConnection&Sequence_1",
-        "quantity&Sequence_1",
-        "selectStock&Sequence_2",
-        "stockData&Sequence_2",
-        "stock&Sequence_2"
+        "clientRow&Sequence_1",
+        "selectClient&Sequence_1",
+        "quantity&Sequence_1"
       ],
       "ArgumentsSectionElementsOrder": [
+        "io_dailySaleAmount",
+        "in_dbConnection",
+        "io_cumulativeOrderHtml",
+        "io_cumulativeLackHtml",
+        "io_cumulativeZeroHtml",
+        "io_cumulativeZero",
+        "io_cumulativeLack",
+        "io_cumulativeOrder",
+        "out_fullname",
+        "in_NumCliente",
+        "out_email",
         "in_barcode",
         "in_quantity",
-        "io_amount",
-        "io_order"
+        "io_amount"
       ],
       "ConstantsSectionElementsOrder": [],
       "AddedNamespaces": null
     },
     {
-      "Path": "ProcessOrder/ObtenerPedCliente.xaml",
+      "Path": "ProcessOrder/GetClientOrder/ObtenerPedCliente.xaml",
       "SortBy": 0,
       "VariablesSectionElementsOrder": [
-        "Numero&Sequence_1",
+        "barcode&Sequence_4",
+        "strQuantity&Sequence_4",
+        "strSecond&Sequence_1",
+        "strHour&Sequence_1",
+        "strMin&Sequence_1",
+        "dbConnection&Sequence_1",
+        "orderHtml&Sequence_1",
+        "cumulativeOrderHtml&Sequence_1",
+        "cumulativeLackHtml&Sequence_1",
+        "cumulativeZeroHtml&Sequence_1",
+        "emailList&Sequence_1",
+        "client&Sequence_1",
+        "cumulativeZero&Sequence_1",
+        "cumulativeLack&Sequence_1",
+        "cumulativeOrder&Sequence_1",
+        "amount&Sequence_1",
+        "fullname&Sequence_1",
+        "email&Sequence_1",
+        "numero&Sequence_1",
+        "tablaCliente&Sequence_1",
+        "order&Sequence_1",
         "NumCliente&Sequence_1",
-        "barcode&Sequence_1",
         "Contador&Sequence_1"
       ],
       "ArgumentsSectionElementsOrder": [
-        "out_numero",
-        "in_ListaC",
-        "out_tablaCliente"
+        "io_dailySaleAmount",
+        "in_excelPath",
+        "in_dbConnection",
+        "in_theDate",
+        "in_ListaC"
       ],
       "ConstantsSectionElementsOrder": [],
       "AddedNamespaces": null
     },
     {
-      "Path": "ProcessOrder/ObtenerStock.xaml",
+      "Path": "ProcessOrder/DailyTurnOver.xaml",
       "SortBy": 0,
       "VariablesSectionElementsOrder": [
-        "tablaCliente&Sequence_1",
-        "TablaClienteTxT&Sequence_1",
-        "NumClientes&Sequence_1",
-        "Numero&Sequence_1",
-        "ListaC&Sequence_1",
-        "LargoLista&Sequence_1"
+        "ListaC&Sequence_9",
+        "tableBefore&Sequence_9",
+        "tableAfter&Sequence_9",
+        "dailyOrderAmount&Sequence_9",
+        "dailySaleAmount&Sequence_9",
+        "amountBalanced&Sequence_1",
+        "excelPath&Sequence_1",
+        "dbConnection&Sequence_1",
+        "theDate&Sequence_1"
       ],
       "ArgumentsSectionElementsOrder": [],
       "ConstantsSectionElementsOrder": [],
       "AddedNamespaces": null
     },
     {
-      "Path": "Daily turnover/Process Data/validate stock/validate stock.xaml",
+      "Path": "ProcessOrder/GetClientOrder/order/validate stock/validate stock.xaml",
       "SortBy": 0,
       "VariablesSectionElementsOrder": [
-        "selectPrice&Sequence_1",
-        "updateRow&Sequence_1",
-        "price&Sequence_2",
-        "priceTable&Sequence_2",
         "selectPrice&Sequence_3",
         "updateRow&Sequence_3",
         "priceTable&Sequence_3",
-        "price&Sequence_3"
+        "unitPrice&Sequence_3",
+        "unitPrice&Sequence_2",
+        "selectPrice&Sequence_1",
+        "updateRow&Sequence_1",
+        "priceTable&Sequence_2"
       ],
       "ArgumentsSectionElementsOrder": [
         "in_barcode",
@@ -231,7 +261,219 @@
         "in_stock",
         "in_dbConnection",
         "io_amount",
-        "io_order"
+        "io_cumulativeOrder",
+        "io_cumulativeLack",
+        "io_cumulativeZero",
+        "io_cumulativeOrderHtml",
+        "io_cumulativeLackHtml",
+        "io_cumulativeZeroHtml",
+        "io_dailySaleAmount"
+      ],
+      "ConstantsSectionElementsOrder": [],
+      "AddedNamespaces": null
+    },
+    {
+      "Path": "DB/Credentials/credentials.xaml",
+      "SortBy": 0,
+      "VariablesSectionElementsOrder": [
+        "pwdSecure&Sequence_1"
+      ],
+      "ArgumentsSectionElementsOrder": [
+        "out_username",
+        "out_pwd",
+        "out_datasource",
+        "out_db"
+      ],
+      "ConstantsSectionElementsOrder": [],
+      "AddedNamespaces": null
+    },
+    {
+      "Path": "DB/Connection/connection.xaml",
+      "SortBy": 0,
+      "VariablesSectionElementsOrder": [
+        "datasource&Sequence_1",
+        "db&Sequence_1",
+        "username&Sequence_1",
+        "pwd&Sequence_1",
+        "strDBConnection&Sequence_1"
+      ],
+      "ArgumentsSectionElementsOrder": [
+        "out_dbConnection"
+      ],
+      "ConstantsSectionElementsOrder": [],
+      "AddedNamespaces": null
+    },
+    {
+      "Path": "ProcessOrder/GetClientOrder/build order/BuildOrder.xaml",
+      "SortBy": 0,
+      "VariablesSectionElementsOrder": [
+        "dateFormat&Sequence_1"
+      ],
+      "ArgumentsSectionElementsOrder": [
+        "in_NumCliente",
+        "out_strMin",
+        "out_strHour",
+        "out_strSecond",
+        "in_theDate",
+        "in_amount"
+      ],
+      "ConstantsSectionElementsOrder": [],
+      "AddedNamespaces": null
+    },
+    {
+      "Path": "ProcessOrder/ObtenerPedCliente(Autosaved).xaml",
+      "SortBy": 0,
+      "VariablesSectionElementsOrder": [
+        "NumCliente&Sequence_1",
+        "Contador&Sequence_1",
+        "order&Sequence_1",
+        "tablaCliente&Sequence_1",
+        "numero&Sequence_1",
+        "email&Sequence_1",
+        "fullname&Sequence_1",
+        "amount&Sequence_1",
+        "cumulativeOrder&Sequence_1",
+        "cumulativeLack&Sequence_1",
+        "cumulativeZero&Sequence_1",
+        "client&Sequence_1",
+        "emailList&Sequence_1",
+        "orderHtml&Sequence_1",
+        "cumulativeOrderHtml&Sequence_1",
+        "cumulativeLackHtml&Sequence_1",
+        "cumulativeZeroHtml&Sequence_1",
+        "barcode&Sequence_4",
+        "strQuantity&Sequence_4"
+      ],
+      "ArgumentsSectionElementsOrder": [
+        "in_ListaC"
+      ],
+      "ConstantsSectionElementsOrder": [],
+      "AddedNamespaces": null
+    },
+    {
+      "Path": "ProcessOrder/GetClientOrder/RecordSale/RecordSale.xaml",
+      "SortBy": 0,
+      "VariablesSectionElementsOrder": [
+        "insertSale&Sequence_1",
+        "dbConnection&Sequence_1"
+      ],
+      "ArgumentsSectionElementsOrder": [
+        "in_tableBefore",
+        "in_tableAfter",
+        "in_dbConnection",
+        "io_dailyOrderAmount",
+        "in_theDate"
+      ],
+      "ConstantsSectionElementsOrder": [],
+      "AddedNamespaces": null
+    },
+    {
+      "Path": "ProcessOrder/SaveQueryInExcel/SaveQueryInExcel.xaml",
+      "SortBy": 0,
+      "VariablesSectionElementsOrder": [],
+      "ArgumentsSectionElementsOrder": [
+        "in_excelPath",
+        "in_amountBalanced"
+      ],
+      "ConstantsSectionElementsOrder": [],
+      "AddedNamespaces": null
+    },
+    {
+      "Path": "ProcessOrder/SaveQueryInExcel/Make Order/MakeOrder.xaml",
+      "SortBy": 0,
+      "VariablesSectionElementsOrder": [
+        "gap&Sequence_6",
+        "barcode&Sequence_6",
+        "stock&Sequence_6",
+        "cantPkgToOrder&Sequence_6",
+        "cantUnitsToOrder&Sequence_6",
+        "dateFormat&Sequence_1",
+        "email&Sequence_1",
+        "emailList&Sequence_1",
+        "fullname&Sequence_1",
+        "cumulativeProductsHtml&Sequence_1",
+        "cumulativeProducts&Sequence_1",
+        "amount&Sequence_1",
+        "orderHtml&Sequence_1",
+        "order&Sequence_1",
+        "StockDataTable&Sequence_1",
+        "cont&Sequence_1"
+      ],
+      "ArgumentsSectionElementsOrder": [
+        "out_dailyOrderAmount",
+        "in_theDate",
+        "in_dbConnection",
+        "in_tableAfter",
+        "in_tableBefore"
+      ],
+      "ConstantsSectionElementsOrder": [],
+      "AddedNamespaces": null
+    },
+    {
+      "Path": "ProcessOrder/WriteBalanceInExcel/WriteBalanceInExcel.xaml",
+      "SortBy": 0,
+      "VariablesSectionElementsOrder": [
+        "InsertChart&Sequence_4"
+      ],
+      "ArgumentsSectionElementsOrder": [
+        "in_excelPath",
+        "in_amountBalanced"
+      ],
+      "ConstantsSectionElementsOrder": [],
+      "AddedNamespaces": null
+    },
+    {
+      "Path": "Scraping Price AND Storage Data/DB/InsertProducerProducts/InsertProducerProducts.xaml",
+      "SortBy": 0,
+      "VariablesSectionElementsOrder": [
+        "insertProduct&Sequence_4",
+        "ProductsDataTable&Sequence_1"
+      ],
+      "ArgumentsSectionElementsOrder": [
+        "in_excelPath",
+        "in_dbConnection"
+      ],
+      "ConstantsSectionElementsOrder": [],
+      "AddedNamespaces": null
+    },
+    {
+      "Path": "Get Data/GetData.xaml",
+      "SortBy": 0,
+      "VariablesSectionElementsOrder": [
+        "fecha&Sequence_1",
+        "formatoFecha&Sequence_1",
+        "StrSegundo&Sequence_1",
+        "StrMinute&Sequence_1",
+        "formatoHora&Sequence_1",
+        "fechaorigen&Sequence_1"
+      ],
+      "ArgumentsSectionElementsOrder": [],
+      "ConstantsSectionElementsOrder": [],
+      "AddedNamespaces": null
+    },
+    {
+      "Path": "ProcessOrder/GetClientOrder/SendEmail/SendEmail.xaml",
+      "SortBy": 0,
+      "VariablesSectionElementsOrder": [],
+      "ArgumentsSectionElementsOrder": [
+        "in_orderHtml",
+        "in_fullname",
+        "in_emailList"
+      ],
+      "ConstantsSectionElementsOrder": [],
+      "AddedNamespaces": null
+    },
+    {
+      "Path": "ProcessOrder/SaveQueryInExcel/Make Order/ValidationStock/ValidationStock.xaml",
+      "SortBy": 0,
+      "VariablesSectionElementsOrder": [],
+      "ArgumentsSectionElementsOrder": [
+        "out_cantUnitsToOrder",
+        "out_cantPkgToOrder",
+        "in_StockDataTable",
+        "in_stock",
+        "in_gap",
+        "in_barcode"
       ],
       "ConstantsSectionElementsOrder": [],
       "AddedNamespaces": null

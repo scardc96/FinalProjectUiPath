@@ -88,7 +88,7 @@
       <AssemblyReference>System.Runtime.Serialization.Primitives</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="connection" sap:VirtualizedContainerService.HintSize="1282,597" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="connection" sap:VirtualizedContainerService.HintSize="1282,424" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:String" Name="datasource" />
       <Variable x:TypeArguments="x:String" Name="db" />
@@ -117,7 +117,6 @@
         <InArgument x:TypeArguments="x:String">["Data Source="+datasource+ ";Initial Catalog=" + db + ";User ID=" + username +";Password="+ pwd + ";Encrypt=False"]</InArgument>
       </Assign.Value>
     </Assign>
-    <ui:LogMessage DisplayName="Registrar mensaje" sap:VirtualizedContainerService.HintSize="434,173" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Establecemos conexión con la Base de Datos&quot;]" />
     <ui:DatabaseConnect DisplayName="Connect to Database" sap:VirtualizedContainerService.HintSize="434,83" sap2010:WorkflowViewState.IdRef="DatabaseConnect_1" ProviderName="Microsoft.Data.SqlClient" ConnectionString="[strDBConnection]" DatabaseConnection="[out_dbConnection]" />
   </Sequence>
 </Activity>
